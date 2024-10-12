@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}}
+
+    <!-- Header Start -->
+    <div class="jumbotron jumbotron-fluid position-relative overlay-bottom" style="margin-bottom: 90px;">
+        <div class="container text-center my-5 py-5">
+            <h1 class="text-white mt-4 mb-4">Learn From Home</h1>
+            <h1 class="text-white display-1 mb-5">Education Courses</h1>
+            <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
+                <form action="{% url 'search' %}" method="get">
+                    <div class="input-group">
+                        <input type="text" name="searchKeyword" class="form-control border-light" style="padding: 30px 25px;" placeholder="Keyword" value="{{ request.GET.searchKeyword }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary px-4 px-lg-5" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="card col-8 p-4 mt-4">
+                <form action="" enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">
+                        {% if 'update' in request.path and 'course' in request.path %}
+                            Change Course
+                        {% elif 'create_course' in request.path %}
+                            Create Course
+                        {% elif 'edit' in request.path and 'profile' in request.path %}
+                            Change Account
+                        {% else %}
+                            Change Profile
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock main %}
+
